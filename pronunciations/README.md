@@ -1,5 +1,7 @@
 # Scraper
 
+This utility is solely for initial data generation.
+
 You can use any source for the two data files, but we used:
 
 [frequencies.txt](https://norvig.com/ngrams/count_1w.txt): English word frequencies compiled [by Peter Norvig](https://norvig.com/ngrams/) from the *Google Web Trillion Word Corpus*. Free under the MIT license.
