@@ -40,7 +40,18 @@
 .Word {
   text-align: center;
   color: red;
-  margin: 30px auto;
+  margin: 200px auto;
   font-size: 100px;
   font-weight: 900;
+}
+
+.SpeakButton {
+  margin: 5px auto;
+  height: 100px;
+  width: 200px;
+}
+
+.Microphone {
+  height: 50px;
+  width: 50px;
 }
