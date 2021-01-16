@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-function Word(props){
-    return(
+function Word(props) {
+    return (
         <div className="Word">
-            <a href="#" onClick={props.onClick}>{props.word}</a>
+            <a href="#" onClick={props.getWord}>{props.word}</a>
         </div>
     )
 }

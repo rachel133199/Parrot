@@ -8,21 +8,38 @@ import { useState } from 'react';
 
 
 function App() {
-  const [phmCol, setPhmCol] = useState({color: "gray"})
-  
-  function onClick() {
+  const [phmCol, setPhmCol] = useState({ color: "gray" })
+  const [word, setWord] = useState({
+    phonemes: ["P", "EH1", "R", "AH0", "T"],
+    word: "parrot"
+  })
+
+  function changeColor() {
     console.log('color change!')
-    setPhmCol({color: "green"})
-    setTimeout(function(){setPhmCol({color: "gray"})}, 500)
+    setPhmCol({ color: "green" })
+    setTimeout(function () { setPhmCol({ color: "gray" }) }, 500)
+  }
+
+  function getWord() {
+    changeColor()
+    fetch("http://127.0.0.1:5000/get_word")
+      .then(response => response.json())
+      .then(response => {
+        // console.log(response)
+        setWord(response)
+        console.log(word)
+      });
+
+    return word.word
   }
 
   return (
     <div className="App">
       <NavBar />
-      <Word word="Parrot" onClick={onClick}/>
-      <Phoneme phmCol={phmCol} phm={"P EH R AH T"}/>
+      <Word getWord={getWord} word={word.word}/>
+      <Phoneme phmCol={phmCol} phm={word.phonemes} />
       <SpeakButton />
-      <PlayButton />
+      <PlayButton onClick={changeColor}/>
     </div>
   );
 }

@@ -3,9 +3,9 @@ import { faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from 'react-bootstrap/Button';
 
-function PlayButton() {
+function PlayButton(props) {
     return(
-        <Button className="PlayButton">
+        <Button className="PlayButton" onClick={props.onClick}>
             <FontAwesomeIcon className="VolumeUp" icon={faVolumeUp} size="10x"/>
         </Button>
     )
