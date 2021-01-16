@@ -1,25 +1,43 @@
-import React from 'react'
+import React from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faVolumeUp } from "@fortawesome/free-solid-svg-icons";
+import Grid from '@material-ui/core/Grid';
 
 function Phoneme(props){
     var count = -1
-    var size = props.phm.map(p => 70)
     let phm = props.phm.map(p => {
         count = count + 1
-        if(props.phmCol[count] == "DarkBlue") {
-            size[count] = 110
-            p = p.substring(0, p.length - 1)
-        } else if(props.phmCol[count] == "BlueViolet") {
-            size[count] = 95
-            p = p.substring(0, p.length - 1)
-        } else if(props.phmCol[count] == "Plum") {
-            size[count] = 70
-            p = p.substring(0, p.length - 1)
+        // if(props.phmCol[count] == "DarkBlue") {
+        //     p = p.substring(0, p.length - 1)
+        // } else if(props.phmCol[count] == "BlueViolet") {
+        //     p = p.substring(0, p.length - 1)
+        // } else if(props.phmCol[count] == "Plum") {
+        //     p = p.substring(0, p.length - 1)
+        // }
+        if (p[p.length-1] === '0') {
+            p = p.substring(0, p.length-1);
+        } else if (p[p.length-1] === '1' || p[p.length-1] === '2') {
+            p = (<b>{p.substring(0, p.length-1)}</b>);
+        } 
+        if (count != props.phm.length-1){
+            return(<span className="PhonemeWord">{p}{'\u00B7'}</span>);
         }
-        return(<span className="PhonemeWord" style={{color: props.phmCol[count], fontSize: size[count]}}>{p} </span>)
+        return(<span className="PhonemeWord">{p}</span>);
     })
     return(
         <div className="Phoneme">
-            <div className="PhonemeWord">[ {phm} ]</div>
+        <Grid 
+            container 
+            direction="row"
+            alignItems="center" 
+            justify="center"
+            spacing={0}
+        >
+            <Grid item className="PhonemeWord">[ {phm} ]</Grid>
+            <Grid item>
+                <FontAwesomeIcon className="VolumeUp" icon={faVolumeUp} onClick={props.onIconClick} size="8x" />
+            </Grid>
+        </Grid>
         </div>
     )
 }
