@@ -8,16 +8,38 @@ import { useState } from 'react';
 
 
 function App() {
-  const [phmCol, setPhmCol] = useState({ color: "gray" })
   const [word, setWord] = useState({
     phonemes: ["P", "EH1", "R", "AH0", "T"],
     word: "parrot"
   })
+  let phm = word.phonemes
+  phm.map(phm => "gray")
+  const [phmCol, setPhmCol] = useState(phm)
 
   function changeColor() {
     console.log('color change!')
-    setPhmCol({ color: "green" })
-    setTimeout(function () { setPhmCol({ color: "gray" }) }, 500)
+    let count = -1
+    let original = phmCol.map(c => "grey")
+    let color = phmCol.map(c => {
+      count = count + 1
+      // console.log(word.phonemes[count])
+      if(word.phonemes[count] != undefined) {
+        var last = word.phonemes[count].slice(-1)
+      }
+      if (last == "2") {
+        return "DarkBlue"
+      } else if (last == "1") {
+        return "BlueViolet"
+      } else if (last == "0") {
+        return "Plum"
+      }
+      return ("gray")
+    })
+    setPhmCol(color)
+    setTimeout(function () { setPhmCol(original) }, 700)
+    console.log(phmCol)
+    // console.log(word.phonemes)
+    
   }
 
   function getWord() {
@@ -27,7 +49,7 @@ function App() {
       .then(response => {
         // console.log(response)
         setWord(response)
-        console.log(word)
+        // console.log(word)
       });
 
     return word.word
@@ -36,10 +58,10 @@ function App() {
   return (
     <div className="App">
       <NavBar />
-      <Word getWord={getWord} word={word.word}/>
+      <Word getWord={getWord} word={word.word} />
       <Phoneme phmCol={phmCol} phm={word.phonemes} />
       <SpeakButton />
-      <PlayButton onClick={changeColor}/>
+      <PlayButton onClick={changeColor} />
     </div>
   );
 }

@@ -67,9 +67,11 @@
 
 .PhonemeWord {
   font-size: 90px;
+  font-weight: 400;
   color: gray;
 }
 
 .ParrotHome {
-  font-size: 15px;
+  font-size: 30px;
+  font-weight: 450;
 }
