@@ -14,6 +14,7 @@ function Phoneme(props){
         // } else if(props.phmCol[count] == "Plum") {
         //     p = p.substring(0, p.length - 1)
         // }
+        p = p.toLowerCase();
         if (p[p.length-1] === '0') {
             p = p.substring(0, p.length-1);
         } else if (p[p.length-1] === '1' || p[p.length-1] === '2') {
@@ -33,10 +34,9 @@ function Phoneme(props){
             justify="center"
             spacing={0}
         >
+            <Grid item sm={1} justify="flex-end"></Grid>
             <Grid item className="PhonemeWord">[ {phm} ]</Grid>
-            <Grid item>
-                <FontAwesomeIcon className="VolumeUp" icon={faVolumeUp} onClick={props.onIconClick} size="8x" />
-            </Grid>
+            <FontAwesomeIcon className="VolumeUp" icon={faVolumeUp} onClick={props.onIconClick} size="8x" />
         </Grid>
         </div>
     )
