@@ -10,6 +10,7 @@
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.0",
     "bootstrap": "^4.5.3",
+    "microsoft-cognitiveservices-speech-sdk": "^1.14.1",
     "python3": "0.0.1",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",

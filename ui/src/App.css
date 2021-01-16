@@ -40,18 +40,36 @@
 .Word {
   text-align: center;
   color: red;
-  margin: 200px auto;
+  margin: 150px auto;
+  margin-bottom: 50px;
   font-size: 100px;
   font-weight: 900;
 }
 
-.SpeakButton {
+.SpeakButton, .PlayButton {
   margin: 5px auto;
   height: 100px;
   width: 200px;
 }
 
-.Microphone {
+.PlayButton {
+  margin-left: 70px;
+}
+
+.Microphone, .VolumeUp {
   height: 50px;
   width: 50px;
+}
+
+.Phoneme {
+  margin-bottom: 70px;
+}
+
+.PhonemeWord {
+  font-size: 90px;
+  color: gray;
+}
+
+.ParrotHome {
+  font-size: 15px;
 }
