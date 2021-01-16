@@ -9,28 +9,7 @@ d = enchant.Dict('en_CA')
 
 
 class Pronunciation:
-    phones = [
-        'AA', 'AE', 'AH', 'AO', 'AW', 'AY', 'B', 'CH', 'D', 'DH', # 01-10
-        'EH', 'ER', 'EY', 'F', 'G', 'HH', 'IH', 'IY', 'JH', 'K',  # 11-20
-        'L', 'M', 'N', 'NG', 'OW', 'OY', 'P', 'R', 'S', 'SH',     # 21-30
-        'T', 'TH', 'UH', 'UW', 'V', 'W', 'Y', 'Z', 'ZH',          # 31-39
-    ]
-    phone_to_char = {
-        phone : chr(i + ord('0') + 1)
-        for i, phone in enumerate(phones)
-    }
-    char_to_phone = { char : phone for phone, char in phone_to_char.items() }
-
     def __init__(self, word, phonemes):
-        self.word = word
-        self.phonemes = phonemes
-
-    @staticmethod
-    def from_str(self, line):
-        # mainly for file I/O
-        i = line.index('\t')
-        word = line[:i]
-        phonemes = line[i+1:-1].split()
         self.word = word
         self.phonemes = phonemes
 
