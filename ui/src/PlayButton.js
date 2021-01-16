@@ -1,12 +1,12 @@
 import React from 'react'
-import { faVolumeUp } from "@fortawesome/free-solid-svg-icons";
+import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from 'react-bootstrap/Button';
 
 function PlayButton(props) {
     return(
-        <Button className="PlayButton" onClick={props.onClick}>
-            <FontAwesomeIcon className="VolumeUp" icon={faVolumeUp} size="10x"/>
+        <Button className="PlayButton" onClick={props.onClick} disabled={true}>
+            <FontAwesomeIcon className="PlayCircle" icon={faPlayCircle} size="10x"/>
         </Button>
     )
 }

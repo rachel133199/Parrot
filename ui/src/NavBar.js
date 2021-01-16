@@ -10,7 +10,7 @@ function NavBar() {
             <a href="#">
                 <FontAwesomeIcon className="Bars" icon={faCrow} size="4x" />
                 <Navbar.Brand href="#">
-                    <h3 className="ParrotHome">Parrot Home</h3>
+                    <h3 className="ParrotHome">Parrot</h3>
                 </Navbar.Brand>
             </a>
         </Navbar>

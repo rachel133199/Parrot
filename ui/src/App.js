@@ -5,7 +5,8 @@ import PlayButton from './PlayButton'
 import Phoneme from './Phoneme'
 import NavBar from './NavBar'
 import { useState } from 'react';
-
+import { faVolumeUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function App() {
   const [word, setWord] = useState({
@@ -17,9 +18,10 @@ function App() {
   const [phmCol, setPhmCol] = useState(phm)
 
   function changeColor() {
-    console.log('color change!')
-    let count = -1
     let original = phmCol.map(c => "grey")
+    console.log('color change!')
+    
+    let count = -1
     let color = phmCol.map(c => {
       count = count + 1
       // console.log(word.phonemes[count])
@@ -36,14 +38,20 @@ function App() {
       return ("gray")
     })
     setPhmCol(color)
-    setTimeout(function () { setPhmCol(original) }, 700)
+    // setTimeout(function () { setPhmCol(original) }, 700)
     console.log(phmCol)
     // console.log(word.phonemes)
     
   }
 
+  function changeBackColor(){
+    let original = phmCol.map(c => "grey")
+    setPhmCol(original)
+    console.log("back")
+  }
+
   function getWord() {
-    changeColor()
+    // changeColor()
     fetch("http://127.0.0.1:5000/get_word")
       .then(response => response.json())
       .then(response => {
@@ -58,7 +66,9 @@ function App() {
   return (
     <div className="App">
       <NavBar />
-      <Word getWord={getWord} word={word.word} />
+      {/* <SpeakButton /> */}
+      {/* <span><FontAwesomeIcon className="VolumeUp" icon={faVolumeUp} size="10x"/></span> */}
+      <Word getWord={getWord} word={word.word} changeColor={changeColor} changeBackColor={changeBackColor}/>
       <Phoneme phmCol={phmCol} phm={word.phonemes} />
       <SpeakButton />
       <PlayButton onClick={changeColor} />

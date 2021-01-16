@@ -42,7 +42,8 @@
   color: red;
   margin: 150px auto;
   margin-bottom: 50px;
-  font-size: 100px;
+  justify-content: center;
+  font-size: 150px;
   font-weight: 900;
 }
 
@@ -56,7 +57,7 @@
   margin-left: 70px;
 }
 
-.Microphone, .VolumeUp {
+.Microphone, .PlayCircle {
   height: 50px;
   width: 50px;
 }
@@ -74,4 +75,10 @@
 .ParrotHome {
   font-size: 30px;
   font-weight: 450;
+}
+
+.VolumeUp{
+  height: 60px;
+  width: 60px;
+  margin-bottom: 18px;
 }
