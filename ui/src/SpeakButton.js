@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function SpeakButton(props){
     return(
-        <Button className="SpeakButton" onClick={props.onClick}>
+        <Button className="SpeakButton" onMouseDown={props.start} onMouseUp={props.stop}>
             <FontAwesomeIcon className="Microphone" icon={faMicrophone} size="10x"/>
         </Button>
     )
