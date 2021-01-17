@@ -12,17 +12,17 @@ Base = declarative_base()
 class Word(Base):
     __tablename__ = 'words'
 
-    rank = Column(Integer, primary_key=True, autoincrement=False)
-    word = Column(String)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    spelling = Column(String, unique=True)
     phonemes = Column(String)
     phonemes_compressed = Column(String)
 
     performances = relationship('Performance', backref='word')
 
     @staticmethod
-    def __from_line(line, rank):
+    def __from_line(line):
         i = line.index('\t')
-        word = line[:i]
+        spelling = line[:i]
         phonemes = line[i+1:-1]
         phonemes_compressed = ''.join(
             compress_phoneme(p)
@@ -30,8 +30,7 @@ class Word(Base):
         )
 
         return Word(
-            rank=rank,
-            word=word,
+            spelling=spelling,
             phonemes=phonemes,
             phonemes_compressed=phonemes_compressed,
         )
@@ -39,10 +38,7 @@ class Word(Base):
     @staticmethod
     def list_from_file(path):
         with path.open() as f:
-            return list(
-                Word.__from_line(line, rank=i+1)
-                for i, line in enumerate(f)
-            )
+            return list(Word.__from_line(line) for i, line in enumerate(f))
 
 
 # USER #########################################################################
@@ -56,12 +52,11 @@ class User(Base):
     performances = relationship('Performance', backref='user')
 
 
-# RESULT #######################################################################
+# PERFORMANCE ##################################################################
 
 class Performance(Base):
     __tablename__ = 'performance'
 
+    word_id = Column(Integer, ForeignKey('words.id'), primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
-    word_rank = Column(Integer, ForeignKey('words.rank'), primary_key=True)
     grade = Column(Float)
-    times_encountered = Column(Integer)
