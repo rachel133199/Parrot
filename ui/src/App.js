@@ -104,11 +104,14 @@ function App() {
   }
 
   let audio;
+  let recorder;
 
   async function record() {
-    const recorder = await recordAudio();
+    recorder = await recordAudio();
     recorder.start();
-    await sleep(3000);
+  }
+
+  async function stopRecording() {
     audio = await recorder.stop();
     let score = await getScore(audio, word.word);
     // TODO: set the color of the phonemes
@@ -126,7 +129,7 @@ function App() {
       {/* <span><FontAwesomeIcon className="VolumeUp" icon={faVolumeUp} size="10x"/></span> */}
       <Word getWord={getWord} word={word.word} changeColor={changeColor} changeBackColor={changeBackColor}/>
       <Phoneme phmCol={phmCol} phm={word.phonemes} word={word.word} />
-      <SpeakButton onClick={record}/>
+      <SpeakButton start={record} stop={stopRecording}/>
       <PlayButton onClick={playback} />
     </div>
   );
