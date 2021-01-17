@@ -22,7 +22,6 @@ function App() {
   const [phmCol, setPhmCol] = useState(phm)
 
   useEffect(() => {
-    console.log(word.word);
     pronounce(word.word);
   }, [word]);
 
