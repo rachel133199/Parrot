@@ -1,7 +1,7 @@
-from sqlalchemy import Table, Column, Integer, String, ForeignKey
+from sqlalchemy import Table, Column, Integer, Float, String, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
-from .phonemes import all_phonemes, compress_phoneme
+from .phonemes import compress_phoneme
 
 
 Base = declarative_base()
@@ -17,7 +17,7 @@ class Word(Base):
     phonemes = Column(String)
     phonemes_compressed = Column(String)
 
-    results = relationship('Result', back_populates='word')
+    performances = relationship('Performance', backref='word')
 
     @staticmethod
     def __from_line(line, rank):
@@ -37,7 +37,7 @@ class Word(Base):
         )
 
     @staticmethod
-    def from_file(path):
+    def list_from_file(path):
         with path.open() as f:
             return list(
                 Word.__from_line(line, rank=i+1)
@@ -50,20 +50,18 @@ class Word(Base):
 class User(Base):
     __tablename__ = 'users'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    id = Column(Integer, primary_key=True)
     name = Column(String)
 
-    results = relationship('Result', back_populates='user')
-
-for phoneme in all_phonemes:
-    setattr(User, phoneme.lower(), Column(String, default=0))
+    performances = relationship('Performance', backref='user')
 
 
 # RESULT #######################################################################
 
-class Result(Base):
-    __tablename__ = 'result'
+class Performance(Base):
+    __tablename__ = 'performance'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    user = Column(Integer, ForeignKey('users.id'))
-    word = Column(Integer, ForeignKey('words.rank'))
+    user_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
+    word_rank = Column(Integer, ForeignKey('words.rank'), primary_key=True)
+    grade = Column(Float)
+    times_encountered = Column(Integer)

@@ -25,12 +25,16 @@ class Pronunciation:
 
 
 def words_by_frequency():
-    path = Path(__file__).parent / './frequencies.txt'
+    words_seen = set()
+    path = Path(__file__).parent / './frequencies_google.txt'
     with path.open() as f:
-        count = 0
         for line in f:
             i = line.index('\t')
-            word = line[:i]
+            word = line[:i].capitalize()
+            if word in words_seen:
+                continue
+
+            words_seen.add(word)
             yield word.capitalize()
 
 
