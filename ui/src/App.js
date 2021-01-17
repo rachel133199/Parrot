@@ -30,8 +30,8 @@ function App() {
     }
     setPhmCol(color)
     console.log(color)
-    setTimeout(function(){ setScore(0) }, 1500)
-    setTimeout(function () { setPhmCol("gray") }, 1500)
+    // setTimeout(function(){ setScore(0) }, 1500)
+    // setTimeout(function () { setPhmCol("gray") }, 1500)
     
   };
 
@@ -41,8 +41,8 @@ function App() {
 
   async function pronounce(word) {
     let recording = await getSpeech(word);
-    const audioUrl = URL.createObjectURL(recording);
-    let pronunciation = new Audio(audioUrl);
+    const url = URL.createObjectURL(recording);
+    let pronunciation = new Audio(url);
     pronunciation.play();
   }
 
@@ -81,7 +81,7 @@ function App() {
     });
   }
 
-  let audio;
+  const [audio, setAudio] = useState(null);
   let recorder;
 
   async function record() {
@@ -90,8 +90,9 @@ function App() {
   }
 
   async function stopRecording() {
-    audio = await recorder.stop();
-    let score = await getScore(audio, word.word);
+    let a = await recorder.stop();
+    setAudio(a);
+    let score = await getScore(a, word.word);
     let s = 0
     if(score.NBest != undefined) {s = score.NBest[0].AccuracyScore}
     s = Math.round(s / 10)
@@ -104,7 +105,7 @@ function App() {
   }
 
   function playback() {
-    if (audio !== undefined) {
+    if (audio) {
       audio.play();
     }
   }
