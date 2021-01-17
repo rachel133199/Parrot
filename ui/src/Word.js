@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react';
+import {getSpeech} from './azure';
 
 function Word(props) {
+
     return (
         <div>
             <span className="Word">
