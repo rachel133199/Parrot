@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import random
-from .generate.queries import random_words, new_random_word, performed_well_words, performed_poorly_words
+from .generate.WordRecommender import WordRecommender
 from .database.engine import check
 
 UPLOAD_EXTENSIONS = ['.docx']
@@ -17,10 +16,8 @@ check()
 @app.route('/get_word', methods=['GET'])
 def get_word():
     """End point to get next word and related info."""
-    word = random_words(count=1)[0]
-    #word = new_random_word(0)
-    #word = performed_well_words(1, limit=2)[0]
-    #word = performed_poorly_words(2, limit=2)[0]
+    wr = WordRecommender()
+    word = wr.get_next_word(1)
     data = {
         'word': word.spelling,
         'phonemes': word.phonemes.split(),
