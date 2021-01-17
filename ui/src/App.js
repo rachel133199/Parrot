@@ -17,7 +17,7 @@ function App() {
     phonemes: ["P", "EH1", "R", "AH0", "T"],
     word: "parrot"
   })
- 
+
   const [phmCol, setPhmCol] = useState("gray")
   const [score, setScore] = useState(0)
 
@@ -32,7 +32,7 @@ function App() {
     console.log(color)
     // setTimeout(function(){ setScore(0) }, 1500)
     // setTimeout(function () { setPhmCol("gray") }, 1500)
-    
+
   };
 
   useEffect(() => {
@@ -49,7 +49,7 @@ function App() {
   }
 
   function getWord() {
-    fetch("http://127.0.0.1:8001/get_word?" + user_id)
+    fetch("http://127.0.0.1:8001/get_word?user_id=" + user_id)
       .then(response => response.json())
       .then(response => {
         setWord(response);
