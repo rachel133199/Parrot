@@ -23,7 +23,7 @@ let ttsHeaders = {
 let sttHeaders = {
     'Ocp-Apim-Subscription-Key': key,
     'Authorization': 'Bearer ',
-    'Content-Type': 'audio/ogg; codecs=opus',
+    'Content-Type': 'audio/wav; codecs=audio/pcm; samplerate=16000',
     'Pronunciation-Assessment': '',
     'Accept': 'application/json',
 }

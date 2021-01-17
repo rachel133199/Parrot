@@ -48,7 +48,7 @@ function App() {
   }
 
   function getWord() {
-    fetch("http://127.0.0.1:5000/get_word?" + user_id)
+    fetch("http://127.0.0.1:8001/get_word?" + user_id)
       .then(response => response.json())
       .then(response => {
         setWord(response);
@@ -73,7 +73,7 @@ function App() {
       'scores': scores
     }
 
-    fetch("http://127.0.0.1:5000/submit_results", {
+    fetch("http://127.0.0.1:8001/submit_results", {
       method: "POST",
       body: data,
       headers: {
