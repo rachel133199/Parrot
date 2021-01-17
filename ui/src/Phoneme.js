@@ -8,13 +8,6 @@ function Phoneme(props){
     var count = -1
     let phm = props.phm.map(p => {
         count = count + 1
-        // if(props.phmCol[count] == "DarkBlue") {
-        //     p = p.substring(0, p.length - 1)
-        // } else if(props.phmCol[count] == "BlueViolet") {
-        //     p = p.substring(0, p.length - 1)
-        // } else if(props.phmCol[count] == "Plum") {
-        //     p = p.substring(0, p.length - 1)
-        // }
         p = p.toLowerCase();
         if (p[p.length-1] === '0') {
             p = p.substring(0, p.length-1);
@@ -22,9 +15,9 @@ function Phoneme(props){
             p = (<b>{p.substring(0, p.length-1)}</b>);
         } 
         if (count != props.phm.length-1){
-            return(<span className="PhonemeWord">{p}{'\u00B7'}</span>);
+            return(<span className="PhonemeWord" style={{color: props.phmCol}}>{p}{'\u00B7'}</span>);
         }
-        return(<span className="PhonemeWord">{p}</span>);
+        return(<span className="PhonemeWord" style={{color: props.phmCol}}>{p}</span>);
     })
 
     let audio;

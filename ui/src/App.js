@@ -16,59 +16,37 @@ function App() {
     phonemes: ["P", "EH1", "R", "AH0", "T"],
     word: "parrot"
   })
-  let phm = word.phonemes
-  phm.map(phm => "gray")
-  const [phmCol, setPhmCol] = useState(phm)
+  // let phm = word.phonemes
+  // phm.map(phm => "gray")
+  const [phmCol, setPhmCol] = useState("gray")
+  const [score, setScore] = useState(0)
 
-  function changeColor() {
-    let original = phmCol.map(c => "grey")
-    console.log('color change!')
-    
-    let count = -1
-    let color = phmCol.map(c => {
-      count = count + 1
-      // console.log(word.phonemes[count])
-      if(word.phonemes[count] != undefined) {
-        var last = word.phonemes[count].slice(-1)
-      }
-      if (last == "2") {
-        return "DarkBlue"
-      } else if (last == "1") {
-        return "BlueViolet"
-      } else if (last == "0") {
-        return "Plum"
-      }
-      return ("gray")
-    })
+  function changeColor(n) {
+    let color = "red"
+    if (n >= 8) {
+      color = "green"
+    } else if (n >= 5 && n < 8) {
+      color = "orange"
+    }
     setPhmCol(color)
-    // setTimeout(function () { setPhmCol(original) }, 700)
-    console.log(phmCol)
-    // console.log(word.phonemes)
-    
-  }
-
-  function changeBackColor(){
-    let original = phmCol.map(c => "grey")
-    setPhmCol(original)
-    console.log("back")
+    console.log(color)
+    setTimeout(function () { setPhmCol("gray") }, 2000)
   }
 
   function getWord() {
-    changeColor()
-    fetch("http://127.0.0.1:8001/get_word")
+    // changeColor()
+    fetch("http://127.0.0.1:5000/get_word")
       .then(response => response.json())
       .then(response => {
-        // console.log(response)
         setWord(response)
-        // console.log(word)
       });
 
     return word.word
   }
 
   function submitResults(score) {
-    fetch("http://127.0.0.1:8001/submit_results", {
-      method:"POST",
+    fetch("http://127.0.0.1:5000/submit_results", {
+      method: "POST",
       body: score,
     }).then(response => console.log(response.json()));
   }
@@ -80,14 +58,20 @@ function App() {
     recorder.start();
     await sleep(3000);
     audio = await recorder.stop();
-    let score = await getScore(audio, word.word);
-    // TODO: set the color of the phonemes
-    submitResults(score);
-    console.log(score);
+    let result = await getScore(audio, word.word);
+    let s = result.NBest[0].AccuracyScore
+    s = Math.round(s / 10)
+    setScore(s);
+    submitResults(s);
+    changeColor(s);
+    // setScore(0);
   }
 
   function playback() {
-    audio.play();
+    if (audio !== undefined) {
+      audio.play();
+      changeColor(score);
+    }
   }
 
   return (
@@ -95,9 +79,12 @@ function App() {
       <NavBar />
       {/* <SpeakButton /> */}
       {/* <span><FontAwesomeIcon className="VolumeUp" icon={faVolumeUp} size="10x"/></span> */}
-      <Word getWord={getWord} word={word.word} changeColor={changeColor} changeBackColor={changeBackColor}/>
+      <Word getWord={getWord} word={word.word} />
       <Phoneme phmCol={phmCol} phm={word.phonemes} word={word.word} />
-      <SpeakButton onClick={record}/>
+      <div>
+        <h1 className="Score">Your score is {score}</h1>
+      </div>
+      <SpeakButton onClick={record} />
       <PlayButton onClick={playback} />
     </div>
   );

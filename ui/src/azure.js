@@ -75,10 +75,11 @@ async function getScore(audio, text) {
             method: "POST",
             headers: headers,
             body: audio.audioBlob,
-        }).then(response => {
-            console.log(response);
-            return response;
         })
+        .then(response => response.json())
+        .then(response => {
+            return response
+        });
     }
 }
 
