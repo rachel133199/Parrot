@@ -69,9 +69,9 @@ async function getScore(audio, text) {
     let headers = {...sttHeaders};
     headers["Authorization"] += t;
     headers["Pronunciation-Assessment"] = pronAssessmentHeader;
-    
+
     if (t !== "") {
-        return fetch(sttEndpoint, {
+        return fetch("http://127.0.0.1:8001/upload_recording", {
             method: "POST",
             headers: headers,
             body: audio.audioBlob,

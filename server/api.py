@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from .generate.WordRecommender import WordRecommender
 from .database.engine import check
+from pydub import AudioSegment
 
 UPLOAD_EXTENSIONS = ['.docx']
 
@@ -28,6 +29,18 @@ def get_word():
 @app.route('/submit_results', methods=['POST'])
 def submit_results():
     """Endpoint to send word pronunciation results."""
+    data = {'msg': 'success'}
+    return jsonify(data)
+
+
+@app.route('/upload_recording', methods=['POST'])
+def upload_recording():
+    """Endpoint to send word pronunciation results."""
+    #print(len(request.files['file']))
+    with open('rec.ogg', 'wb') as f:
+        f.write(request.data)
+    sound = AudioSegment.from_ogg('rec.ogg')
+    sound.export("out.ogg", format="ogg", codec="libvorbis")
     data = {'msg': 'success'}
     return jsonify(data)
 
