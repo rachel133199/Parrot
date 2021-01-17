@@ -1,5 +1,5 @@
 from sqlalchemy.sql.expression import func
-from ..database.engine import session
+from ..database.engine import session, Session
 from ..database.models import Word, User, Performance
 
 THRESHOLD = 80
@@ -41,3 +41,25 @@ def words_attempted(user_id):
     for instance in session.query(Performance).filter(Performance.user_id == user_id):
         words_attempted.add(instance.word_id)
     return words_attempted
+
+
+def update_performance(user_id, spelling, grade, r=0.5, b=50):
+    spelling = spelling.capitalize()
+    word = session.query(Performance).filter(spelling=spelling).first()
+    if word is None:
+        return # do nothing if we can't find the word
+
+    performance = (
+        session.query(Performance)
+               .filter(user_id=user_id)
+               .filter(word_id=word.id)
+               .first()
+    )
+    if performance is None:
+        run_transaction(
+            Session,
+            lambda s: s.add_all(Performance(user_id=user_id, word_id=word.id, b*(1-r) + grade*r))
+        )
+    else:
+        performance.grade = performance.grade * (1-r) + grade * r
+        session.commit()
