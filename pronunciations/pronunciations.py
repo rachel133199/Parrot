@@ -76,12 +76,11 @@ def generate(n):
     with path.open('w') as f:
         for pronunciation in itertools.islice(pronunciations(), n):
             f.write(str(pronunciation))
-            # print(pronunciation.compressed_phonemes())
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--top', type=int, default=10000,
+    parser.add_argument('--top', type=int, default=5000,
                         help='The number of words to output.')
     args = parser.parse_args()
 

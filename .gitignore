@@ -142,6 +142,7 @@ cython_debug/
 # Data
 /pronunciations/frequencies.txt
 /pronunciations/phonemes.txt
+/pronunciations/frequencies_google.txt
 
 # Secrets
 *.crt
