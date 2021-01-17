@@ -37,6 +37,8 @@ function App() {
 
   useEffect(() => {
     pronounce(word.word);
+    setScore(0);
+    setPhmCol("gray");
   }, [word]);
 
   async function pronounce(word) {
