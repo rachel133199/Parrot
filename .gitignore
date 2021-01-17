@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+htn
 *.py[cod]
 *$py.class
 
@@ -141,6 +142,7 @@ cython_debug/
 # Data
 /pronunciations/frequencies.txt
 /pronunciations/phonemes.txt
+/pronunciations/frequencies_google.txt
 
 # Secrets
 *.crt
