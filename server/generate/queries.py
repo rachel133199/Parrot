@@ -25,8 +25,6 @@ def new_random_words(user_id, limit):
 
 
 def performed_well_words(user_id, limit):
-    for instance in session.query(Performance).all():
-        print(instance.user_id, instance.word.spelling, instance.grade)
     return [instance.word for instance in session.query(Performance).filter(Performance.grade >= THRESHOLD).filter(Performance.user_id == user_id).order_by(func.random())[:limit]]
 
 
