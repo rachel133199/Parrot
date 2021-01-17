@@ -25,12 +25,16 @@ class Pronunciation:
 
 
 def words_by_frequency():
-    path = Path(__file__).parent / './frequencies.txt'
+    words_seen = set()
+    path = Path(__file__).parent / './frequencies_google.txt'
     with path.open() as f:
-        count = 0
         for line in f:
             i = line.index('\t')
-            word = line[:i]
+            word = line[:i].capitalize()
+            if word in words_seen:
+                continue
+
+            words_seen.add(word)
             yield word.capitalize()
 
 
@@ -76,12 +80,11 @@ def generate(n):
     with path.open('w') as f:
         for pronunciation in itertools.islice(pronunciations(), n):
             f.write(str(pronunciation))
-            # print(pronunciation.compressed_phonemes())
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--top', type=int, default=10000,
+    parser.add_argument('--top', type=int, default=5000,
                         help='The number of words to output.')
     args = parser.parse_args()
 
