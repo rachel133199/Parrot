@@ -1,14 +1,15 @@
-import React from 'react'
+import React from 'react';
 import { faCrow } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Navbar from 'react-bootstrap/Navbar'
-import Nav from 'react-bootstrap/Nav'
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import logo from './parrot.png';
 
 function NavBar() {
     return (
         <Navbar bg="outline-primary">
             <a href="#">
-                <FontAwesomeIcon className="Bars" icon={faCrow} size="4x" />
+                <img src={logo} width="50px" height="50px"></img>
                 <Navbar.Brand href="#">
                     <h3 className="ParrotHome">Parrot</h3>
                 </Navbar.Brand>

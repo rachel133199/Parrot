@@ -48,7 +48,7 @@
 }
 
 .SpeakButton, .PlayButton {
-  margin: 5px auto;
+  /* margin: 5px auto; */
   height: 100px;
   width: 200px;
 }
@@ -67,7 +67,7 @@
 }
 
 .PhonemeWord {
-  font-size: 90px;
+  font-size: 70px;
   font-weight: 400;
   color: gray;
 }
@@ -78,7 +78,6 @@
 }
 
 .VolumeUp{
-  height: 60px;
-  width: 60px;
-  margin-bottom: 18px;
+  height: 40px;
+  width: 40px;
 }
