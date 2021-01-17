@@ -17,8 +17,7 @@ function App() {
     phonemes: ["P", "EH1", "R", "AH0", "T"],
     word: "parrot"
   })
-  // let phm = word.phonemes
-  // phm.map(phm => "gray")
+ 
   const [phmCol, setPhmCol] = useState("gray")
   const [score, setScore] = useState(0)
 
@@ -31,24 +30,26 @@ function App() {
     }
     setPhmCol(color)
     console.log(color)
-    setTimeout(function(){ setScore(0) }, 2000)
-    setTimeout(function () { setPhmCol("gray") }, 2000)
-
+    // setTimeout(function(){ setScore(0) }, 1500)
+    // setTimeout(function () { setPhmCol("gray") }, 1500)
+    
   };
 
   useEffect(() => {
     pronounce(word.word);
+    setScore(0);
+    setPhmCol("gray");
   }, [word]);
 
   async function pronounce(word) {
     let recording = await getSpeech(word);
-    const audioUrl = URL.createObjectURL(recording);
-    let pronunciation = new Audio(audioUrl);
+    const url = URL.createObjectURL(recording);
+    let pronunciation = new Audio(url);
     pronunciation.play();
   }
 
   function getWord() {
-    fetch("http://127.0.0.1:8001/get_word?user_id=" + user_id)
+    fetch("http://127.0.0.1:8001/get_word?" + user_id)
       .then(response => response.json())
       .then(response => {
         setWord(response);
@@ -82,7 +83,7 @@ function App() {
     });
   }
 
-  let audio;
+  const [audio, setAudio] = useState(null);
   let recorder;
 
   async function record() {
@@ -91,8 +92,9 @@ function App() {
   }
 
   async function stopRecording() {
-    audio = await recorder.stop();
-    let score = await getScore(audio, word.word);
+    let a = await recorder.stop();
+    setAudio(a);
+    let score = await getScore(a, word.word);
     let s = 0
     if(score.NBest != undefined) {s = score.NBest[0].AccuracyScore}
     s = Math.round(s / 10)
@@ -105,7 +107,7 @@ function App() {
   }
 
   function playback() {
-    if (audio !== undefined) {
+    if (audio) {
       audio.play();
     }
   }
@@ -114,12 +116,10 @@ function App() {
   return (
     <div className="App">
       <NavBar />
-      {/* <SpeakButton /> */}
-      {/* <span><FontAwesomeIcon className="VolumeUp" icon={faVolumeUp} size="10x"/></span> */}
       <Word getWord={getWord} word={word.word} />
       <Phoneme phmCol={phmCol} phm={word.phonemes} word={word.word}/>
       <div>
-        <h1 className="Score">Your score is {score}</h1>
+        <h1 className="Score">Your score is <span style={{color: phmCol}}>{score}</span></h1>
       </div>
       <SpeakButton start={record} stop={stopRecording} />
       <PlayButton onClick={playback} />
