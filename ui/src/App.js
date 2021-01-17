@@ -17,8 +17,7 @@ function App() {
     phonemes: ["P", "EH1", "R", "AH0", "T"],
     word: "parrot"
   })
-  // let phm = word.phonemes
-  // phm.map(phm => "gray")
+ 
   const [phmCol, setPhmCol] = useState("gray")
   const [score, setScore] = useState(0)
 
@@ -31,8 +30,8 @@ function App() {
     }
     setPhmCol(color)
     console.log(color)
-    setTimeout(function(){ setScore(0) }, 2000)
-    setTimeout(function () { setPhmCol("gray") }, 2000)
+    setTimeout(function(){ setScore(0) }, 1500)
+    setTimeout(function () { setPhmCol("gray") }, 1500)
     
   };
 
@@ -114,12 +113,10 @@ function App() {
   return (
     <div className="App">
       <NavBar />
-      {/* <SpeakButton /> */}
-      {/* <span><FontAwesomeIcon className="VolumeUp" icon={faVolumeUp} size="10x"/></span> */}
       <Word getWord={getWord} word={word.word} />
       <Phoneme phmCol={phmCol} phm={word.phonemes} word={word.word}/>
       <div>
-        <h1 className="Score">Your score is {score}</h1>
+        <h1 className="Score">Your score is <span style={{color: phmCol}}>{score}</span></h1>
       </div>
       <SpeakButton start={record} stop={stopRecording} />
       <PlayButton onClick={playback} />
