@@ -54,7 +54,7 @@ function App() {
 
   function getWord() {
     changeColor()
-    fetch("http://127.0.0.1:8001/get_word")
+    fetch("http://127.0.0.1:5000/get_word")
       .then(response => response.json())
       .then(response => {
         // console.log(response)
@@ -68,14 +68,39 @@ function App() {
   let audio;
 
   async function record() {
+    fetch("https://westus.api.cognitive.microsoft.com/sts/v1.0/issueToken", {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/x-www-form-urlencoded',
+        'Content-length': '0',
+        'Ocp-Apim-Subscription-Key': '7c0cb9b8617f487eb23ed60138a8d928'
+      }
+    })
+    .then(response => console.log(response));
+    // .then(response => console.log(response));
+
+    // console.log(response)
+
     const recorder = await recordAudio();
     recorder.start();
     await sleep(3000);
     audio = await recorder.stop();
+    // fetch("https://westus.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1?language=en-CA", {
+    //   method: 'POST',
+    //   host: "westus.stt.speech.microsoft.com",
+    //   headers: {
+    //     'Authorization': "", 
+    //     'Content-type': 'application/ssml+xml',
+    //     'Content-Length': '199',
+    //   },
+    //   connection: 'Keep-Alive',
+    //   body: URL()
+    // })
   }
 
   function playback() {
     audio.play();
+    console.log(audio)
   }
 
   return (
