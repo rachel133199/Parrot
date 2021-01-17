@@ -12,6 +12,7 @@ import { getSpeech, getScore } from './azure';
 
 
 function App() {
+  const user_id = '0';
   const [word, setWord] = useState({
     phonemes: ["P", "EH1", "R", "AH0", "T"],
     word: "parrot"
@@ -67,9 +68,28 @@ function App() {
   }
 
   function submitResults(score) {
+    let scores = []
+
+    if (score.NBest) {
+      scores = score.NBest[0].Words.map(w => {
+        return {
+          word: w.Word,
+          score: w.AccuracyScore
+        }
+      })
+    } 
+
+    let data = {
+      'user_id': user_id,
+      'scores': scores
+    }
+
     fetch("http://127.0.0.1:8001/submit_results", {
       method:"POST",
-      body: score,
+      body: data,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      }
     }).then(response => console.log(response.json()));
   }
 
@@ -83,7 +103,6 @@ function App() {
     let score = await getScore(audio, word.word);
     // TODO: set the color of the phonemes
     submitResults(score);
-    console.log(score);
   }
 
   function playback() {
