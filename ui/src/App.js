@@ -100,7 +100,7 @@ function App() {
       headers: {
         'Access-Control-Allow-Origin': '*',
       }
-    }).then(response => console.log(response.json()));
+    });
   }
 
   let audio;
