@@ -2,6 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import Grid from '@material-ui/core/Grid';
+import {getSpeech} from './azure';
 
 function Phoneme(props){
     var count = -1
@@ -25,6 +26,16 @@ function Phoneme(props){
         }
         return(<span className="PhonemeWord">{p}</span>);
     })
+
+    let audio;
+    
+    async function pronounce(word) {
+        let recording = await getSpeech(word);
+        const audioUrl = URL.createObjectURL(recording);
+        audio = new Audio(audioUrl);
+        audio.play();
+    }
+
     return(
         <div className="Phoneme">
         <Grid 
@@ -36,7 +47,7 @@ function Phoneme(props){
         >
             <Grid item sm={1} justify="flex-end"></Grid>
             <Grid item className="PhonemeWord">[ {phm} ]</Grid>
-            <FontAwesomeIcon className="VolumeUp" icon={faVolumeUp} onClick={props.onIconClick} size="8x" />
+            <FontAwesomeIcon className="VolumeUp" icon={faVolumeUp} onClick={() => {pronounce(props.word)}} size="8x" />
         </Grid>
         </div>
     )
