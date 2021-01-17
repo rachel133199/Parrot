@@ -58,7 +58,11 @@ def update_performance(user_id, spelling, grade, r=0.5, b=50):
     if performance is None:
         run_transaction(
             Session,
-            lambda s: s.add_all(Performance(user_id=user_id, word_id=word.id, b*(1-r) + grade*r))
+            lambda s: s.add(Performance(
+                user_id=user_id,
+                word_id=word.id,
+                grade=b*(1-r) + grade*r,
+            ))
         )
     else:
         performance.grade = performance.grade * (1-r) + grade * r
