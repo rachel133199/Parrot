@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { recordAudio, sleep } from "./record";
-import { getSpeech } from './azure';
+import { getSpeech, getScore } from './azure';
 
 
 function App() {
@@ -66,6 +66,13 @@ function App() {
     return word.word
   }
 
+  function submitResults(score) {
+    fetch("http://127.0.0.1:8001/submit_results", {
+      method:"POST",
+      body: score,
+    }).then(response => console.log(response.json()));
+  }
+
   let audio;
 
   async function record() {
@@ -73,6 +80,10 @@ function App() {
     recorder.start();
     await sleep(3000);
     audio = await recorder.stop();
+    let score = await getScore(audio, word.word);
+    // TODO: set the color of the phonemes
+    submitResults(score);
+    console.log(score);
   }
 
   function playback() {
