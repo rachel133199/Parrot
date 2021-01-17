@@ -16,8 +16,10 @@ check()
 @app.route('/get_word', methods=['GET'])
 def get_word():
     """End point to get next word and related info."""
+    user_id = int(request.args.get('user_id'))
+    print("USER_ID", user_id)
     wr = WordRecommender()
-    word = wr.get_next_word(1)
+    word = wr.get_next_word(user_id)
     data = {
         'word': word.spelling,
         'phonemes': word.phonemes.split(),
@@ -28,10 +30,13 @@ def get_word():
 @app.route('/submit_results', methods=['POST'])
 def submit_results():
     """Endpoint to send word pronunciation results."""
-    data = {'msg': 'success'}
-    # data = request.data
-    print(request.data)
-    return jsonify(data)
+    data = request.get_json(force=True)
+    user_id = int(data.get('user_id'))
+    scores = data.get('scores')
+    word = scores[0]['word'].capitalize()
+    score = int(scores[0]['score'])
+    print(word, score)
+    return jsonify({'msg': 'success'})
 
 
 if __name__ == '__main__':
