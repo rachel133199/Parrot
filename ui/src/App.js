@@ -4,7 +4,7 @@ import SpeakButton from './SpeakButton'
 import PlayButton from './PlayButton'
 import Phoneme from './Phoneme'
 import NavBar from './NavBar'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { recordAudio, sleep } from "./record";
@@ -16,14 +16,17 @@ function App() {
   const [word, setWord] = useState({
     phonemes: ["P", "EH1", "R", "AH0", "T"],
     word: "parrot"
-  })
+  });
   let phm = word.phonemes
   phm.map(phm => "gray")
   const [phmCol, setPhmCol] = useState(phm)
 
+  useEffect(() => {
+    pronounce(word.word);
+  }, [word]);
+
   function changeColor() {
     let original = phmCol.map(c => "grey")
-    console.log('color change!')
     
     let count = -1
     let color = phmCol.map(c => {
@@ -54,13 +57,20 @@ function App() {
     console.log("back")
   }
 
+  async function pronounce(word) {
+      let recording = await getSpeech(word);
+      const audioUrl = URL.createObjectURL(recording);
+      let pronunciation = new Audio(audioUrl);
+      pronunciation.play();
+  }
+
   function getWord() {
     changeColor()
-    fetch("http://127.0.0.1:8001/get_word")
+    fetch("http://127.0.0.1:8001/get_word?" + user_id)
       .then(response => response.json())
       .then(response => {
         // console.log(response)
-        setWord(response)
+        setWord(response);
         // console.log(word)
       });
 
@@ -90,7 +100,7 @@ function App() {
       headers: {
         'Access-Control-Allow-Origin': '*',
       }
-    }).then(response => console.log(response.json()));
+    });
   }
 
   let audio;
