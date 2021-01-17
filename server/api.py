@@ -28,6 +28,8 @@ def get_word():
 def submit_results():
     """Endpoint to send word pronunciation results."""
     data = {'msg': 'success'}
+    # data = request.data
+    print(request.data)
     return jsonify(data)
 
 
